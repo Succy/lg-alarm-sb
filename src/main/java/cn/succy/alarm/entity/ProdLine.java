@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Succy
  */
-@Table(name = "prod_line")
+@Table(name = "prod_line", uniqueConstraints = @UniqueConstraint(columnNames = "code"))
 @Entity
 @Data
 public class ProdLine implements Serializable {
