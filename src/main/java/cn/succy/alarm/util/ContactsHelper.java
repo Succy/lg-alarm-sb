@@ -26,19 +26,25 @@ public class ContactsHelper {
     }
 
     public static Map<String, List<Contact>> getReceiverMap() {
-        if(receiverMap == null || receiverMap.size() <= 0) {
+        if (receiverMap == null || receiverMap.size() <= 0) {
             load();
         }
         return receiverMap;
     }
 
     private static void load() {
+        receiverMap.clear();
         List<ProdLine> prodLines = prodLineDao.findAll();
         for (ProdLine prodLine : prodLines) {
-           // prodLine.getCode();
+            String key = prodLine.getCode();
+            List<Contact> contactList = prodLine.getContactList();
+            receiverMap.put(key, contactList);
         }
     }
 
+    /**
+     * 当对数据库进行修改时，调用该方法进行同步
+     */
     public static void synchronize() {
         load();
     }

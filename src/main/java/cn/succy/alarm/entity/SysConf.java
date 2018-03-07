@@ -12,7 +12,7 @@ public class SysConf implements Serializable {
     private static final long serialVersionUID = 5383110636547258025L;
     @Id
     @GeneratedValue
-    private Integer id;
+    private String id;
 
     /**
      * 发送器，可以配置邮箱发送或者微信发送
@@ -28,6 +28,10 @@ public class SysConf implements Serializable {
      */
     @Column(name = "email_user")
     private String emailUser;
+    /**
+     * 邮箱发件人，即指定一个名字代替邮箱号
+     */
+    private String emailAddressor;
 
     /**
      * 发件邮箱登录用户密码
@@ -52,5 +56,5 @@ public class SysConf implements Serializable {
     private String wechatCorpSecret;
 
     @Column(name = "wechat_agent_id", columnDefinition = "int default 1000002")
-    private String wechatAgentId;
+    private Integer wechatAgentId;
 }

@@ -4,6 +4,7 @@ import cn.succy.alarm.dao.ProdLineDao;
 import cn.succy.alarm.entity.Contact;
 import cn.succy.alarm.dao.ContactDao;
 import cn.succy.alarm.entity.ProdLine;
+import cn.succy.alarm.util.ContactsHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,5 +59,10 @@ public class AlarmApplicationTests {
         logger.info("{}", save);
     }
 
+    @Test
+    public void testContactHelper() {
+        Map<String, List<Contact>> receiverMap = ContactsHelper.getReceiverMap();
+        System.out.println(receiverMap);
+    }
 
 }

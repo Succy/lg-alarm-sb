@@ -35,7 +35,7 @@ public class ProdLine implements Serializable {
      */
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "prodline_contact",
             joinColumns = @JoinColumn(name = "prodline_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "contact_id", referencedColumnName = "id")
