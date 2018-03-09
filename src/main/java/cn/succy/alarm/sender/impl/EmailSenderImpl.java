@@ -36,9 +36,9 @@ public class EmailSenderImpl implements Sender {
 
     @Override
     public void send(TemplateModel model) {
-        String appName = model.getAppName();
-        if (!recvMap.containsKey(appName)) {
-            logger.warn("could not found modelName:{} in recvMap", appName);
+        String prodLineCode = model.getProdLineCode();
+        if (!recvMap.containsKey(prodLineCode)) {
+            logger.warn("could not found prodLineCode:{} in recvMap", prodLineCode);
             return;
         }
 
@@ -57,7 +57,7 @@ public class EmailSenderImpl implements Sender {
         if (useSSL) {
             email.setSslSmtpPort(String.valueOf(sysConf.getSmtpSSLPort()));
         }
-        Set<String> emailSet = recvMap.get(appName).stream().map(Contact::getEmail).collect(Collectors.toSet());
+        Set<String> emailSet = recvMap.get(prodLineCode).stream().map(Contact::getEmail).collect(Collectors.toSet());
 
         try {
             email.setFrom(sysConf.getEmailUser(), sysConf.getEmailAddressor());

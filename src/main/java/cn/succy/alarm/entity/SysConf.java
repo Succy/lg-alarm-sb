@@ -11,13 +11,12 @@ import java.io.Serializable;
 public class SysConf implements Serializable {
     private static final long serialVersionUID = 5383110636547258025L;
     @Id
-    @GeneratedValue
     private String id;
 
     /**
      * 发送器，可以配置邮箱发送或者微信发送
      */
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar default 'wechat'")
     private String sender;
 
     @Column(columnDefinition = "int default 100", nullable = false)

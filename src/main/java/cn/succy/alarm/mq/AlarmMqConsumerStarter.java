@@ -32,7 +32,6 @@ public class AlarmMqConsumerStarter extends Thread {
             try {
                 TemplateModel model = AlarmMessageQueue.me().pull();
                 if (model != null) {
-                    //TODO send alarm
                     List<String> senderKeys = StrUtil.split(sysConf.getSender(), StrUtil.C_COMMA);
                     for (String key : senderKeys) {
                         Sender sender = SenderFactory.getSender(key);

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="/static/css/font.css">
+	<link rel="stylesheet" href="/static/css/weadmin.css">
+</head>
+
+<body>
+<div class="weadmin-body">
+	<div class="weadmin-tab-content">
+		<div class="weadmin-block">
+			<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+			<button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)"><i class="layui-icon"></i>添加</button>
+			<span class="fr" style="line-height:40px">共有数据：#(contactList.size())条</span>
+		</div>
+
+		<table class="layui-table" id="memberList">
+			<thead>
+			<tr>
+				<th>
+					<div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon"></i></div>
+				</th>
+				<th>ID</th>
+				<th>姓名</th>
+				<th>科室</th>
+				<th>邮箱号</th>
+				<th>微信ID</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+            #for (contact : contactList)
+                <tr data-id="#(for.count)">
+                    <td>
+                        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="#(for.count)"><i class="layui-icon"></i></div>
+                    </td>
+                    <td>#(contact.id)</td>
+                    <td>#(contact.name)</td>
+                    <td>#(contact.office)</td>
+                    <td>#(contact.email)</td>
+                    <td>#(contact.wxId)</td>
+					<td class="td-manage">
+						<button type="button" class="layui-btn layui-btn-xs">编辑</button>
+						<button type="button" class="layui-btn layui-btn-danger layui-btn-xs">删除</button>
+						<!--<button type="button" class="layui-btn layui-btn-normal layui-btn-xs">配置</button>-->
+					</td>
+
+                </tr>
+			#end
+			</tbody>
+		</table>
+	</div>
+
+</div>
+
+<!--配置联系人列表-->
+<div id="config-contacts">
+
+</div>
+</body>
+<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.config({
+        base: '/static/js/',
+        version: '101100'
+    }).use('admin');
+    layui.use(['form', 'jquery','laypage', 'admin', 'layer'], function() {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var page = layui.laypage;
+        var layer = layui.layer;
+        //各种基于事件的操作，下面会有进一步介绍
+        form.on('switch(ssl-switch)', function(data) {
+            console.log(data.elem.checked)
+            if(data.elem.checked) {
+                $(".ssl-host-port").slideDown();
+            } else {
+                $(".ssl-host-port").slideUp();
+            }
+        })
+    });
+</script>
+
+</html>

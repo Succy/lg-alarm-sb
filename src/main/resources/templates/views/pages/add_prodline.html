@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/font.css">
+    <link rel="stylesheet" href="/static/css/weadmin.css">
+    <style>
+        .weadmin-body {
+            padding: 25px 10px 20px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="weadmin-body">
+        <form class="layui-form" method="post" action='#(prodLine == null ? "/prodline/save" : "/prodline/edit/prodLine.id")'>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="we-red">*</span>系统代号</label>
+                <div class="layui-input-inline">
+                    <input name="code" type="text" required lay-verify="required" autocomplete="off" class="layui-input" value="#(prodLine.code??)" >
+                </div>
+                <div class="layui-form-mid layui-word-aux">产线系统代号，如lg,lz,bx等</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="we-red">*</span>系统名称</label>
+                <div class="layui-input-inline">
+                    <input name="name" type="text" required lay-verify="required" autocomplete="off" class="layui-input" value="#(prodLine.name??)" >
+                </div>
+                <div class="layui-form-mid layui-word-aux">产线系统名称</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="we-red">*</span>系统描述</label>
+                <div class="layui-input-inline">
+                    <input name="description" type="text" required lay-verify="required" autocomplete="off" class="layui-input" value="#(prodLine.description??)">
+                </div>
+                <div class="layui-form-mid layui-word-aux">产线系统简单描述</div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter='#(prodLine == null ? "add" : "edit")'>立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/layui/layui.js"></script>
+    <script>
+        layui.use(['layer', 'form', 'jquery'], function () {
+            var layer = layui.layer;
+            var form = layui.form;
+            var $ = layui.jquery;
+            form.on('submit(add)', function (data) {
+                console.log("这是add操作");
+                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+                $.ajax({
+                    url: '/prodline/save',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        "code": $("input[name='code']").val(),
+                        "name": $("input[name='name']").val(),
+                        "description": $("input[name='description']").val()
+                    },
+                    success: function (result) {
+                        if (result.code === 0) {
+                            layer.msg(result.msg);
+                            parent.layer.close(index); //再执行关闭
+                            parent.location.reload();
+                        }
+                    }
+                });
+                return false;
+            });
+
+            form.on('submit(edit)', function (data) {
+                console.log(data)
+            });
+
+        })
+
+    </script>
+</body>
+</html>

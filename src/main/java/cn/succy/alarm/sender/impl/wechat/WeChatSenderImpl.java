@@ -32,17 +32,16 @@ import java.util.stream.Collectors;
 
 public class WeChatSenderImpl implements Sender {
     private static final Logger logger = LoggerFactory.getLogger(WeChatSenderImpl.class);
-   // private Setting wxSetting = SettingManager.getSetting(Constants.SETTING_GROUP_WECHAT);
     private Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
     private SysConf sysConf = SysConfHelper.getSysConf();
     @Override
     public void send(TemplateModel model) {
-        String modelAppName = model.getAppName();
-        if (!recvMap.containsKey(modelAppName)) {
+        String prodLineCode = model.getProdLineCode();
+        if (!recvMap.containsKey(prodLineCode)) {
             return;
         }
 
-        List<Contact> contacts = recvMap.get(modelAppName);
+        List<Contact> contacts = recvMap.get(prodLineCode);
         Set<String> weChatSet = contacts.stream().map(Contact::getWxId).collect(Collectors.toSet());
 
         String touser = CollUtil.join(weChatSet, "|");

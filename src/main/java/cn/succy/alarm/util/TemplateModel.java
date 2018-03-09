@@ -21,10 +21,12 @@ public class TemplateModel implements Serializable {
      */
     private String alarmName;
 
+    private String prodLineCode;
+
     /**
      * 告警模块名称
      */
-    private String appName;
+    private String modelName;
     /**
      * 警报级别
      */

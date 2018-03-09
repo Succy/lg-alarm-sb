@@ -41,7 +41,6 @@ public class TemplateManager {
         engine.setBaseTemplatePath(path);
         // 共享StrKit，方便在模板中使用
         engine.addSharedObject("StrKit", new StrKit());
-        engine.addSharedObject("AlarmUtil", new AlarmUtil());
         TEMPLATE = engine.getTemplate(fileName);
     }
 

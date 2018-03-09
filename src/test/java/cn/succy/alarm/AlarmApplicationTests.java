@@ -64,5 +64,10 @@ public class AlarmApplicationTests {
         Map<String, List<Contact>> receiverMap = ContactsHelper.getReceiverMap();
         System.out.println(receiverMap);
     }
+    @Test
+    public void testFindByCode() {
+        ProdLine lg = prodLineDao.findByCode("lg");
+        System.out.println(lg);
+    }
 
 }
