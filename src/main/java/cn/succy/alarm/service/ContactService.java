@@ -15,4 +15,16 @@ public class ContactService {
     public List<Contact> findAll() {
         return  contactDao.findAll();
     }
+
+    public Contact findById(Integer id) {
+        return contactDao.findOne(id);
+    }
+
+    public Contact save(Contact contact) {
+        return contactDao.save(contact);
+    }
+
+    public void update(Contact contact) {
+        contactDao.save(contact);
+    }
 }

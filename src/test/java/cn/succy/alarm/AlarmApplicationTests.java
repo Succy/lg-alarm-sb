@@ -1,9 +1,14 @@
 package cn.succy.alarm;
 
-import cn.succy.alarm.dao.ProdLineDao;
-import cn.succy.alarm.entity.Contact;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.succy.alarm.dao.ContactDao;
+import cn.succy.alarm.dao.ProdLineDao;
+import cn.succy.alarm.dao.SysConfDao;
+import cn.succy.alarm.entity.Contact;
 import cn.succy.alarm.entity.ProdLine;
+import cn.succy.alarm.entity.SysConf;
+import cn.succy.alarm.util.Constants;
 import cn.succy.alarm.util.ContactsHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +30,9 @@ public class AlarmApplicationTests {
     private ContactDao contactDao;
     @Autowired
     private ProdLineDao prodLineDao;
+
+    @Autowired
+    private SysConfDao sysConfDao;
 
     @Test
     public void contextLoads() {
@@ -68,6 +76,18 @@ public class AlarmApplicationTests {
     public void testFindByCode() {
         ProdLine lg = prodLineDao.findByCode("lg");
         System.out.println(lg);
+    }
+
+    @Test
+    public void testFillBean() {
+        SysConf oldConf = sysConfDao.findOne(Constants.SYS_CONF_ID);
+        System.out.println(oldConf);
+        SysConf sysConf = new SysConf();
+        sysConf.setEmailAddressor("报警系统");
+        BeanUtil.copyProperties(sysConf, oldConf, CopyOptions.create().setIgnoreNullValue(true));
+//        BeanUtils.copyProperties(sysConf, oldConf);
+        System.out.println(oldConf);
+
     }
 
 }

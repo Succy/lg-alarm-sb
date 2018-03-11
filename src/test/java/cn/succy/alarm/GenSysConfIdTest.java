@@ -10,4 +10,6 @@ public class GenSysConfIdTest {
         String id = Constants.SYS_CONF_ID;
         System.out.println("id => " + id);
     }
+
+
 }

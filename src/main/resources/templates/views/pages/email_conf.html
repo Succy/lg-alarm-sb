@@ -16,30 +16,37 @@
 			<div class="weadmin-tab-content">
 				<form class="layui-form">
 					<div class="layui-form-item">
-						<label class="layui-form-label">发件箱</label>
+						<label class="layui-form-label"><span class="we-red">*</span>发件箱</label>
 						<div class="layui-input-inline">
-				          <input name="from_email" type="text" lay-verify="email" autocomplete="off" class="layui-input" value="#(sysConf.emailUser)">
+				          <input name="emailUser" type="text" lay-verify="email" autocomplete="off" class="layui-input" value="#(sysConf.emailUser)">
 				        </div>
 				        <div class="layui-form-mid layui-word-aux">发送邮件的邮箱地址(必填)</div>
 					</div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><span class="we-red">*</span>账户密码</label>
+                        <div class="layui-input-inline">
+                            <input name="emailPwd" type="text" required lay-verify="required" autocomplete="off" class="layui-input" value="#(sysConf.emailPwd)">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">发件箱账户密码(必填)</div>
+                    </div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">发件人</label>
 						<div class="layui-input-inline">
-				          <input name="from_email" type="text"  autocomplete="off" class="layui-input" value='#(sysConf.emailAddressor ?? "报警系统")'>
+				          <input name="emailAddressor" type="text"  autocomplete="off" class="layui-input" value='#(sysConf.emailAddressor ?? "报警系统")'>
 				        </div>
 				        <div class="layui-form-mid layui-word-aux">邮件显示的发件人</div>
 					</div>
 					<div class="layui-form-item">
-						<label class="layui-form-label">smtp服务器</label>
+						<label class="layui-form-label"><span class="we-red">*</span>smtp服务器</label>
 						<div class="layui-input-inline">
-				          <input name="smtpHost" type="text" autocomplete="off" class="layui-input" value="#(sysConf.smtpHost)">
+				          <input name="smtpHost" type="text" required lay-verify="required" autocomplete="off" class="layui-input" value="#(sysConf.smtpHost)">
 				        </div>
 				        <div class="layui-form-mid layui-word-aux">发送邮件的smtp服务器，如smtp.sina.com(必填)</div>
 					</div>
 					<div class="layui-form-item">
 						<label class="layui-form-label">smtp端口</label>
 						<div class="layui-input-inline">
-				          <input name="from_email" type="text" lay-verify="number" autocomplete="off" class="layui-input" value="#(sysConf.smtpPort)">
+				          <input name="smtpPort" type="text" lay-verify="number" autocomplete="off" class="layui-input" value="#(sysConf.smtpPort)">
 				        </div>
 				        <div class="layui-form-mid layui-word-aux">发送邮件的smtp端口，默认25</div>
 					</div>
@@ -47,7 +54,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">字符编码</label>
 						<div class="layui-input-inline">
-				          <input name="from_email" type="text" autocomplete="off" class="layui-input" value="#(sysConf.emailCharset)">
+				          <input name="emailCharset" type="text" autocomplete="off" class="layui-input" value="#(sysConf.emailCharset)">
 				        </div>
 				        <div class="layui-form-mid layui-word-aux">邮件编码，默认使用utf-8</div>
 					</div>
@@ -55,7 +62,7 @@
 					<div class="layui-form-item">
 					    <label class="layui-form-label">启用SSL</label>
 					    <div class="layui-input-inline">
-					    	<input type="checkbox" name="switch" lay-skin="switch" lay-text="ON|OFF" lay-filter="ssl-switch" value="#(sysConf.smtpSSL ? 1 : 0)">
+					    	<input type="checkbox" name="smtpSSL" lay-skin="switch" lay-text="ON|OFF" lay-filter="ssl-switch" value="#(sysConf.smtpSSL ? 1 : 0)">
 					    </div>
 					    <div class="layui-form-mid layui-word-aux">是否启用SSL，默认不启用，但是QQ邮箱等需要启用</div>
 					</div>
@@ -64,14 +71,14 @@
 						<div class="layui-form-item">
 							<label class="layui-form-label">ssl服务器</label>
 							<div class="layui-input-inline">
-					          <input name="from_email" type="text"  required lay-verify="required" autocomplete="off" class="layui-input" value="#(sysConf.smtpHost)">
+					          <input name="smtpSSLHost" type="text"  autocomplete="off" class="layui-input" value="#(sysConf.smtpHost)">
 					        </div>
 					        <div class="layui-form-mid layui-word-aux">邮箱ssl smtp服务器</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">ssl 端口</label>
 							<div class="layui-input-inline">
-					          <input name="from_email" type="text" lay-verify="number" required lay-verify="required" autocomplete="off" class="layui-input" value="#(sysConf.smtpSSLPort)">
+					          <input name="smtpSSLPort" type="text" lay-verify="number"  autocomplete="off" class="layui-input" value="#(sysConf.smtpSSLPort)">
 					        </div>
 					        <div class="layui-form-mid layui-word-aux">邮箱ssl smtp端口，默认443</div>
 						</div>
@@ -80,7 +87,7 @@
 					
 					<div class="layui-form-item">
 					    <div class="layui-input-block">
-					      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					      <button class="layui-btn" lay-submit lay-filter="emailConf">立即提交</button>
 					      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
 					    </div>
 					</div>
@@ -91,9 +98,11 @@
 	</body>
 	<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
 	<script>
-		layui.use(['form', 'jquery'], function(){
+		layui.use(['form', 'jquery', 'layer'], function(){
 		  var form = layui.form;
 		  var $ = layui.jquery;
+		  var layer = layui.layer;
+
 		  //各种基于事件的操作，下面会有进一步介绍
 		  form.on('switch(ssl-switch)', function(data) {
 		  	if (data.elem.checked) {
@@ -103,8 +112,39 @@
                 $("input[name='smtpHost']").attr("disabled", false);
 		  		$(".ssl-host-port").slideUp();
 		  	}
-		  })
-		});
+		  });
+
+            form.on('submit(emailConf)', function () {
+                var emailHost = "";
+                var stmpSSL = false;
+                if ($("input[name='smtpSSL']").val() == 1) {
+                    emailHost = $("input[name='smtpHost']").val();
+                    stmpSSL = false;
+                } else {
+                    emailHost = $("input[name='smtpSSLHost']").val();
+                    stmpSSL = true;
+                }
+                $.ajax({
+                    url: '/sysconf/update',
+                    data: {
+                        "emailUser": $("input[name='emailUser']").val(),
+                        "emailPwd": $("input[name='emailPwd']").val(),
+                        "emailCharset": $("input[name='emailCharset']").val(),
+                        "smtpHost": emailHost,
+                        "smtpSSL": stmpSSL,
+                        "smtpPort": $("input[name='smtpPort']").val(),
+                        "smtpSSLPort": $("input[name='smtpSSLPort']").val()
+                    },
+                    type: 'put',
+                    dataType: 'json',
+                    success: function (result) {
+                        layer.msg("修改成功");
+                        location.reload();
+                    }
+                });
+                return false;
+            })
+        });
 	</script>
 
 </html>

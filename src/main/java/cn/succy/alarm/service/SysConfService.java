@@ -14,4 +14,8 @@ public class SysConfService {
     public SysConf findSysConf() {
        return sysConfDao.findOne(Constants.SYS_CONF_ID);
     }
+
+    public void updateSysConf(SysConf sysConf) {
+        sysConfDao.save(sysConf);
+    }
 }
