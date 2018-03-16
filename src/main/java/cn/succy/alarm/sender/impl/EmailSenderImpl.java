@@ -8,10 +8,9 @@ import cn.succy.alarm.util.ContactsHelper;
 import cn.succy.alarm.util.SysConfHelper;
 import cn.succy.alarm.util.TemplateManager;
 import cn.succy.alarm.util.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -25,20 +24,17 @@ import java.util.stream.Collectors;
  * @author Succy
  * @date 2017-10-13 11:36
  **/
-
+@Slf4j
 public class EmailSenderImpl implements Sender {
-    private static final Logger logger = LoggerFactory.getLogger(EmailSenderImpl.class);
-    //private Setting emailSetting = SettingManager.getSetting(Constants.SETTING_GROUP_EMAIL);
     private SysConf sysConf = SysConfHelper.getSysConf();
     private Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
-
 
 
     @Override
     public void send(TemplateModel model) {
         String prodLineCode = model.getProdLineCode();
         if (!recvMap.containsKey(prodLineCode)) {
-            logger.warn("could not found prodLineCode:{} in recvMap", prodLineCode);
+            log.warn("could not found prodLineCode:{} in recvMap", prodLineCode);
             return;
         }
 
@@ -69,9 +65,10 @@ public class EmailSenderImpl implements Sender {
             email.setSubject(model.getAlarmName());
             email.setHtmlMsg(template);
             email.send();
-            logger.debug("EmailSender has send a email");
+
+            log.info("EmailSender has send a email");
         } catch (EmailException e) {
-            logger.error("send email failure", e);
+            log.error("send email failure", e);
             throw new RuntimeException(e);
         }
     }

@@ -2,6 +2,7 @@ package cn.succy.alarm.util;
 
 import cn.succy.alarm.dao.SysConfDao;
 import cn.succy.alarm.entity.SysConf;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,9 @@ import org.springframework.stereotype.Component;
  * Created by succy on 18-3-7.
  */
 @Component
+@Slf4j
 public class SysConfHelper {
-    private static SysConf sysConf = null;
+    private volatile static SysConf sysConf = null;
 
     private static SysConfDao sysConfDao;
     @Autowired
@@ -35,5 +37,6 @@ public class SysConfHelper {
      */
     public static void synchronize() {
         load();
+        log.info("sysConf => {}", sysConf);
     }
 }

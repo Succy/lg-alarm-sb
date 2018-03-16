@@ -8,6 +8,7 @@ import cn.succy.alarm.sender.Sender;
 import cn.succy.alarm.sender.SenderFactory;
 import cn.succy.alarm.util.SysConfHelper;
 import cn.succy.alarm.util.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -16,9 +17,8 @@ import java.util.List;
  * @author Succy
  * Created on 18-3-7.
  */
+@Slf4j
 public class AlarmMqConsumerStarter extends Thread {
-    private static final Log logger = LogFactory.get();
-    private SysConf sysConf = SysConfHelper.getSysConf();
 
     public AlarmMqConsumerStarter() {
         super("alarm-consumer-thread");
@@ -26,13 +26,14 @@ public class AlarmMqConsumerStarter extends Thread {
 
     @Override
     public void run() {
-        logger.info("alarm mq consumer startup...");
+        log.info("alarm mq consumer startup...");
 
         while (true) {
             try {
                 TemplateModel model = AlarmMessageQueue.me().pull();
                 if (model != null) {
-                    List<String> senderKeys = StrUtil.split(sysConf.getSender(), StrUtil.C_COMMA);
+                    List<String> senderKeys = StrUtil.split(SysConfHelper.getSysConf().getSender(), StrUtil.C_COMMA);
+                    log.info("senderKeys => {}", senderKeys);
                     for (String key : senderKeys) {
                         Sender sender = SenderFactory.getSender(key);
                         sender.send(model);
@@ -41,7 +42,7 @@ public class AlarmMqConsumerStarter extends Thread {
             } catch (Exception e) {
                 // 该出捕获异常是因为：当邮件发送失败时会抛出异常，如果不捕获，这里将跳出循环
                 // 队列中其他等待发送的消息就不会继续发送了。
-                logger.warn(e.getMessage(), e);
+                log.warn(e.getMessage(), e);
             }
         }
     }

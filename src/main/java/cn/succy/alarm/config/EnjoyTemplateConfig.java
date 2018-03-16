@@ -1,5 +1,6 @@
 package cn.succy.alarm.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.jfinal.template.source.ClassPathSourceFactory;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +21,7 @@ public class EnjoyTemplateConfig {
         jfr.setSuffix(".html");
         jfr.setContentType("text/html;charset=UTF-8");
         jfr.setOrder(0);
-//        jfr.addSharedFunction("/view/common/_layout.html");
-//        jfr.addSharedFunction("/view/common/_paginate.html");
+        jfr.addSharedObject("StrUtil", new StrUtil());
         return jfr;
     }
 }

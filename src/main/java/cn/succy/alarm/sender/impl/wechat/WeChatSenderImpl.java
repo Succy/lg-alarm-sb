@@ -15,6 +15,7 @@ import cn.succy.alarm.util.SysConfHelper;
 import cn.succy.alarm.util.TemplateManager;
 import cn.succy.alarm.util.TemplateModel;
 import cn.succy.alarm.util.TokenUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +30,11 @@ import java.util.stream.Collectors;
  * @author Succy
  * @date 2017-10-13 11:37
  **/
-
+@Slf4j
 public class WeChatSenderImpl implements Sender {
-    private static final Logger logger = LoggerFactory.getLogger(WeChatSenderImpl.class);
     private Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
     private SysConf sysConf = SysConfHelper.getSysConf();
+
     @Override
     public void send(TemplateModel model) {
         String prodLineCode = model.getProdLineCode();
@@ -74,7 +75,7 @@ public class WeChatSenderImpl implements Sender {
             // 如果再一次重试不成功，直接抛出运行时异常
             retry(msgJson);
         } else {
-            logger.debug("send wechat message success; resp={}", respJson);
+            log.info("send wechat message success; resp={}", respJson);
         }
 
     }
@@ -93,9 +94,9 @@ public class WeChatSenderImpl implements Sender {
         JSONObject respJson = JSONUtil.parseObj(response);
 
         if (respJson.getInt(Constants.WeChat.ERR_CODE) == Constants.WeChat.SUCCESS_CODE) {
-            logger.debug("send wechat message success; resp=>{}", respJson);
+            log.info("send wechat message success; resp=>{}", respJson);
         } else {
-            logger.error("send wechat message failure; resp={}", respJson);
+            log.error("send wechat message failure; resp={}", respJson);
             throw new RuntimeException("send wechat message failure");
         }
     }

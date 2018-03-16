@@ -1,5 +1,6 @@
 package cn.succy.alarm.entity;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -56,4 +57,34 @@ public class SysConf implements Serializable {
 
     @Column(name = "wechat_agent_id", columnDefinition = "int default 1000002")
     private Integer wechatAgentId;
+
+    /**
+     * 针对String类型的属性，当赋值为""时，调用该方法
+     */
+    public void blank2Null() {
+        if (StrUtil.isBlank(sender)) {
+            sender = null;
+        }
+        if (StrUtil.isBlank(emailUser)) {
+            emailUser = null;
+        }
+        if (StrUtil.isBlank(emailAddressor)) {
+            emailAddressor = null;
+        }
+        if (StrUtil.isBlank(emailCharset)) {
+            emailCharset = null;
+        }
+        if (StrUtil.isBlank(emailPwd)) {
+            emailPwd = null;
+        }
+        if (StrUtil.isBlank(smtpHost)) {
+            smtpHost = null;
+        }
+        if (StrUtil.isBlank(wechatCorpId)) {
+            wechatCorpId = null;
+        }
+        if (StrUtil.isBlank(wechatCorpSecret)) {
+            wechatCorpSecret = null;
+        }
+    }
 }

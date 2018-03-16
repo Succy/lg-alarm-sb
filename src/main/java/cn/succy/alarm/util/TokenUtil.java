@@ -4,8 +4,7 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.succy.alarm.entity.SysConf;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +15,8 @@ import java.util.Map;
  * @author Succy
  * @date 2017-10-16 19:48
  **/
-
+@Slf4j
 public class TokenUtil {
-    private static final Logger logger = LoggerFactory.getLogger(TokenUtil.class);
-   // private static Setting wxSetting = SettingManager.getSetting(Constants.SETTING_GROUP_WECHAT);
     private static SysConf sysConf = SysConfHelper.getSysConf();
     private static String accessToken;
     private static long expiredate = -1L;
@@ -39,7 +36,9 @@ public class TokenUtil {
         String result = HttpUtil.get(Constants.WeChat.URL_GET_TOKEN, params);
         JSONObject jsonObject = JSONUtil.parseObj(result);
         accessToken = jsonObject.getStr(Constants.WeChat.ACCESS_TOKEN);
-        logger.debug("access_token={}", accessToken);
+        if (log.isDebugEnabled()) {
+            log.debug("access_token={}", accessToken);
+        }
         expiredate = System.currentTimeMillis() + jsonObject.getInt(Constants.WeChat.EXPIRES_IN) * 1000;
     }
 

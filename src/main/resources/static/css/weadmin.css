@@ -180,6 +180,8 @@ body {
   width: 100%;
 }
 .weadmin-body {
+  overflow: hidden;
+  position: relative;
   padding: 10px;
 }
 .weadmin-tab-content {
@@ -599,4 +601,12 @@ table td {
 /***/
 .tab-body-div {
 	border: 1px solid #CCCCCC;
+}
+
+.model-form {
+  padding-top: 30px;
+  padding-right: 45px;
+}
+.model-form-footer {
+    text-align: right;
 }

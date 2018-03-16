@@ -19,7 +19,6 @@ public interface Constants {
         String SSL_POEMAIL_PORT = "ssl.port";
     }
 
-
     /**
      * 微信相关配置常量
      */
@@ -40,17 +39,9 @@ public interface Constants {
         int INVALID_TOKEN_CODE = 40014;
     }
 
-    /**
-     * 分组名常量
-     */
-    String SETTING_GROUP_EMAIL = "email";
-    String SETTING_GROUP_WECHAT = "wechat";
-    /**
-     * 全局setting常量
-     */
-    String SETTING_SENDER = "sender";
-    String SETTING_THREAD_POOL_SIZE = "thread.pool.size";
 
-    String ALARM_SYS_NAME = "质量数据采集系统告警";
     String SYS_CONF_ID = SecureUtil.md5("lg@#xxb%alarm*&SysConf");
+    String ADMIN_ID = SecureUtil.md5("lg@xxb##&%alarm**@SuperAdmin");
+    String ADMIN_DEFAULT_PWD = SecureUtil.md5("lg@xxb");
+
 }

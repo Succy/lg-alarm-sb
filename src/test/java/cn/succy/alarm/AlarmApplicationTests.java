@@ -2,12 +2,14 @@ package cn.succy.alarm;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.json.JSONUtil;
 import cn.succy.alarm.dao.ContactDao;
 import cn.succy.alarm.dao.ProdLineDao;
 import cn.succy.alarm.dao.SysConfDao;
 import cn.succy.alarm.entity.Contact;
 import cn.succy.alarm.entity.ProdLine;
 import cn.succy.alarm.entity.SysConf;
+import cn.succy.alarm.service.ContactService;
 import cn.succy.alarm.util.Constants;
 import cn.succy.alarm.util.ContactsHelper;
 import org.junit.Test;
@@ -33,6 +35,9 @@ public class AlarmApplicationTests {
 
     @Autowired
     private SysConfDao sysConfDao;
+
+    @Autowired
+    private ContactService contactService;
 
     @Test
     public void contextLoads() {
@@ -75,7 +80,10 @@ public class AlarmApplicationTests {
     @Test
     public void testFindByCode() {
         ProdLine lg = prodLineDao.findByCode("lg");
-        System.out.println(lg);
+        List<Contact> all = contactDao.findAll();
+        lg.setContactList(all);
+
+        prodLineDao.save(lg);
     }
 
     @Test
@@ -90,4 +98,15 @@ public class AlarmApplicationTests {
 
     }
 
+    @Test
+    public void testGetOfficeList() {
+        List<String> officeList = contactDao.findOfficeList();
+        System.out.println(officeList);
+    }
+
+    @Test
+    public void testGetMap4ZTree() {
+        String contactMap4ZTree = contactService.getContactMap4ZTree(1);
+        System.out.println(contactMap4ZTree);
+    }
 }

@@ -2,19 +2,17 @@ package cn.succy.alarm.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.log.Log;
-import cn.hutool.log.LogFactory;
 import com.jfinal.kit.StrKit;
 import com.jfinal.template.Engine;
 import com.jfinal.template.Template;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Succy
  * @date 2017-10-12 18:49
  **/
-
+@Slf4j
 public class TemplateManager {
-    private static final Log logger = LogFactory.get();
     private static final Template TEMPLATE;
     private static final String DEFAULT_TEMPLATE_FILE = "message.tpl";
     private static final String BASE_TEMPLATE_PATH = "templates/";
@@ -26,9 +24,11 @@ public class TemplateManager {
 
         // 判断模板文件是否存在，如果没有配置alarm.template的话，模板默认为classpath:template/message.tpl
         // 如果文件不存在，抛出异常
-        logger.debug("template: {}", templateStr);
+        if (log.isDebugEnabled()) {
+            log.debug("template: {}", templateStr);
+        }
         if (!FileUtil.exist(templateStr)) {
-            logger.error("template file is not exist; please add a template file in classpath:template/message.tpl or set the real template file path to alarm.template key");
+            log.error("template file is not exist; please add a template file in classpath:template/message.tpl or set the real template file path to alarm.template key");
             throw new RuntimeException("template file is not exist; please add a template file in classpath:template/message.tpl or set the real template file path to alarm.template key");
         }
         String templatePath = FileUtil.getAbsolutePath(templateStr);

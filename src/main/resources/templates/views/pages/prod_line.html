@@ -19,9 +19,11 @@
 				<div class="weadmin-block">
 					<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button>
 					<button class="layui-btn" onclick="WeAdminShow('添加产线系统','/prodline/getAddView',540,300)"><i class="layui-icon">&#xe61f;</i>添加</button>
-					<span class="fr" style="line-height:40px">共有数据：#(prodLineList.size()) 条</span>
+					<span class="fr" style="line-height:40px">共有数据：#(prodLineList.size() ?? "0") 条</span>
 				</div>
-
+				#if (prodLineList == null || prodLineList.size() == 0)
+					<h3 style="text-align: center">暂时还未有任何产线信息，请点击添加按钮进行添加</h3>
+				#else
 				<table class="layui-table" id="memberList">
 					<thead>
 						<tr>
@@ -48,20 +50,17 @@
 							<td class="td-manage">
 								<button type="button" class="layui-btn layui-btn-xs" onclick="WeAdminShow('编辑产线信息', '/prodline/getEditView/#(prodline.id)', 540, 300)">编辑</button>
 								<button type="button" class="layui-btn layui-btn-danger layui-btn-xs" onclick="memDel('prodline', #(prodline.id))">删除</button>
-								<button type="button" class="layui-btn layui-btn-normal layui-btn-xs">配置</button>
+								<button type="button" class="layui-btn layui-btn-normal layui-btn-xs" onclick="WeAdminShow('配置#(prodline.name)产线联系人', '/prodline/getConfView/#(prodline.id)', 400, 350)" >配置</button>
 							</td>
 						</tr>
                     #end
 					</tbody>
 				</table>
+				#end
 			</div>
 
 		</div>
 		
-		<!--配置联系人列表-->
-		<div id="config-contacts">
-			
-		</div>
 	</body>
 	<script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
 	<script>

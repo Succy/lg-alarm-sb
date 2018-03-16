@@ -16,3 +16,8 @@ spring:
       ddl-auto: update
   mvc:
     static-path-pattern: /static/**
+logging:
+  path: ./logs
+  file: app.log
+server:
+  port: 9000

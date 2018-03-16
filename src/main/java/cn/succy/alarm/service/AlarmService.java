@@ -2,7 +2,10 @@ package cn.succy.alarm.service;
 
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.succy.alarm.dao.AdminDao;
 import cn.succy.alarm.dao.ProdLineDao;
+import cn.succy.alarm.entity.Admin;
 import cn.succy.alarm.entity.ProdLine;
 import cn.succy.alarm.mq.AlarmMessageQueue;
 import cn.succy.alarm.util.ParamModel;
@@ -19,6 +22,9 @@ import org.springframework.stereotype.Service;
 public class AlarmService {
     @Autowired
     private ProdLineDao prodLineDao;
+
+    @Autowired
+    private AdminDao adminDao;
 
     /**
      * 将ParamModel转成TemplateModel
@@ -82,5 +88,14 @@ public class AlarmService {
         }
 
         return result;
+    }
+
+    public Admin login(String name, String pwd) {
+        pwd = SecureUtil.md5(pwd);
+        return adminDao.findByNameAndPwd(name, pwd);
+    }
+
+    public void updateAdmin(Admin admin) {
+        adminDao.save(admin);
     }
 }
