@@ -8,16 +8,10 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.succy.alarm.entity.Contact;
 import cn.succy.alarm.entity.SysConf;
+import cn.succy.alarm.exception.WeChatRuntimeException;
 import cn.succy.alarm.sender.Sender;
-import cn.succy.alarm.util.Constants;
-import cn.succy.alarm.util.ContactsHelper;
-import cn.succy.alarm.util.SysConfHelper;
-import cn.succy.alarm.util.TemplateManager;
-import cn.succy.alarm.util.TemplateModel;
-import cn.succy.alarm.util.TokenUtil;
+import cn.succy.alarm.util.*;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -32,11 +26,10 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 public class WeChatSenderImpl implements Sender {
-    private Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
-    private SysConf sysConf = SysConfHelper.getSysConf();
-
     @Override
     public void send(TemplateModel model) {
+        Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
+        SysConf sysConf = SysConfHelper.getSysConf();
         String prodLineCode = model.getProdLineCode();
         if (!recvMap.containsKey(prodLineCode)) {
             return;
@@ -97,7 +90,7 @@ public class WeChatSenderImpl implements Sender {
             log.info("send wechat message success; resp=>{}", respJson);
         } else {
             log.error("send wechat message failure; resp={}", respJson);
-            throw new RuntimeException("send wechat message failure");
+            throw new WeChatRuntimeException("send wechat message failure");
         }
     }
 }

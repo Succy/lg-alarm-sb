@@ -84,6 +84,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
                     <finalName>lg-alarm-2.0.0</finalName>
+                    <!--加上下面这一句，上面的finalName是什么，打包出来的目录就叫什么-->
 					<appendAssemblyId>false</appendAssemblyId>
 					<descriptors>
 						<descriptor>src/assembly/assembly.xml</descriptor>
@@ -122,6 +123,7 @@
 						<exclude>*.properties</exclude>
 						<exclude>*.json</exclude>
 						<exclude>*.yml</exclude>
+						<exclude>*.xml</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

@@ -3,6 +3,7 @@ package cn.succy.alarm.sender.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.succy.alarm.entity.Contact;
 import cn.succy.alarm.entity.SysConf;
+import cn.succy.alarm.exception.EmailRuntimeException;
 import cn.succy.alarm.sender.Sender;
 import cn.succy.alarm.util.ContactsHelper;
 import cn.succy.alarm.util.SysConfHelper;
@@ -26,12 +27,11 @@ import java.util.stream.Collectors;
  **/
 @Slf4j
 public class EmailSenderImpl implements Sender {
-    private SysConf sysConf = SysConfHelper.getSysConf();
-    private Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
-
-
     @Override
     public void send(TemplateModel model) {
+        SysConf sysConf = SysConfHelper.getSysConf();
+        Map<String, List<Contact>> recvMap = ContactsHelper.getReceiverMap();
+
         String prodLineCode = model.getProdLineCode();
         if (!recvMap.containsKey(prodLineCode)) {
             log.warn("could not found prodLineCode:{} in recvMap", prodLineCode);
@@ -69,7 +69,7 @@ public class EmailSenderImpl implements Sender {
             log.info("EmailSender has send a email");
         } catch (EmailException e) {
             log.error("send email failure", e);
-            throw new RuntimeException(e);
+            throw new EmailRuntimeException(e);
         }
     }
 }

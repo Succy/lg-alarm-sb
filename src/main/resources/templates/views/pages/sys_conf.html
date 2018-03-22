@@ -11,11 +11,17 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="stylesheet" href="/static/css/font.css">
     <link rel="stylesheet" href="/static/css/weadmin.css">
-    <script type="text/javascript" src="/static/layui/layui.js" charset="utf-8"></script>
+    <style>
+        .alarm-name-block,.alarm-content {
+
+            max-width: 515px;
+        }
+    </style>
 </head>
 <body>
 <div class="weadmin-body">
     <div class="weadmin-tab-content">
+        <blockquote class="layui-elem-quote"><strong>基本系统参数设置</strong></blockquote>
         <form class="layui-form">
             <div class="layui-form-item">
                 <label class="layui-form-label">发送器</label>
@@ -56,6 +62,45 @@
                 </div>
             </div>
         </form>
+        <!--<hr class="layui-bg-green">-->
+        <div class="send">
+            <blockquote class="layui-elem-quote"><strong>警报发送测试</strong></blockquote>
+            <form action="" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">警报名称</label>
+                    <div class="layui-input-block alarm-name-block">
+                        <input type="text" name="alarmName" required  lay-verify="required" placeholder="请输入警报名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">模块代码</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="modelCode" required lay-verify="required" placeholder="请输入模块代码" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">警报级别</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="level" required lay-verify="required" placeholder="请输入警报级别" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">警报内容</label>
+                    <div class="layui-input-block alarm-content">
+                        <textarea name="content" placeholder="请输入警报内容" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="sendAlarm">发送警报</button>
+                        <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
 </div>
@@ -65,7 +110,7 @@
     layui.use(['form', 'jquery'], function () {
         var form = layui.form;
         var $  = layui.jquery;
-
+        // 提交基本系统配置
         form.on('submit(sysConf)', function () {
             var sender = [];
             $("input[type=checkbox]").each(function () {
@@ -86,6 +131,20 @@
                     location.reload(true);
                 }
             });
+            return false;
+        });
+
+        // 发送警报
+        form.on("submit(sendAlarm)", function () {
+            $.post("/alarm/send", {
+                "alarmName": $("input[name=alarmName]").val(),
+                "modelCode": $("input[name=modelCode]").val(),
+                "level": $("input[name=level]").val(),
+                "content": $("textarea[name=content]").val()
+            }, function (result) {
+                layer.msg(JSON.stringify(result));
+            }, "json");
+
             return false;
         });
     });

@@ -8,6 +8,7 @@ import cn.succy.alarm.entity.ProdLine;
 import cn.succy.alarm.util.ContactsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
@@ -30,15 +31,18 @@ public class ContactService {
         return contactDao.findOne(id);
     }
 
+    @Transactional
     public Contact save(Contact contact) {
         return contactDao.save(contact);
     }
 
+    @Transactional
     public void update(Contact contact) {
         contactDao.save(contact);
         ContactsHelper.synchronize();
     }
 
+    @Transactional
     public void delById(Integer id) {
         contactDao.delete(id);
         ContactsHelper.synchronize();

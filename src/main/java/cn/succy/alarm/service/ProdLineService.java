@@ -10,6 +10,7 @@ import cn.succy.alarm.entity.ProdLine;
 import cn.succy.alarm.util.ContactsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -29,10 +30,12 @@ public class ProdLineService {
         return prodLineDao.findOne(id);
     }
 
+    @Transactional
     public ProdLine save(ProdLine prodLine) {
         return prodLineDao.save(prodLine);
     }
 
+    @Transactional
     public void update(ProdLine prodLine) {
         prodLineDao.save(prodLine);
         ContactsHelper.synchronize();
@@ -43,6 +46,7 @@ public class ProdLineService {
         ContactsHelper.synchronize();
     }
 
+    @Transactional
     public void config(String[] ids, Integer prodlineId) {
         ProdLine prodLine = prodLineDao.findOne(prodlineId);
         List<Contact> contactList = null;

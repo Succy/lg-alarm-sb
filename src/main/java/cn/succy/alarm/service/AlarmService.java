@@ -13,6 +13,7 @@ import cn.succy.alarm.util.TemplateModel;
 import cn.succy.alarm.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Succy
@@ -95,6 +96,7 @@ public class AlarmService {
         return adminDao.findByNameAndPwd(name, pwd);
     }
 
+    @Transactional
     public void updateAdmin(Admin admin) {
         adminDao.save(admin);
     }
